@@ -1,0 +1,91 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="text-center">
+        {% if success_flag %}
+        <p class="alert alert-success">{{ resp }}</p>
+        {% endif %}
+
+        {% if success_flag == False %}
+        <p class="alert alert-danger">{{ resp }}</p>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xl-6 mt-1">
+            <div class="m-2" style="margin-left: 100px;">
+                <a href="{% url 'view_profile' user_data.id %}"> <i class="fa fa-user btn btn-primary"
+                        aria-hidden="true"> Profile </i> </a>
+                <a href="{%url 'home_page' %}"> <i class="fa fa-sign-out btn btn-danger" aria-hidden="true"> Logout </i>
+                </a>
+            </div>
+            <div class="jumbotron" style="background-color: #E9ECEF; padding: 30px;">
+                <h1 class="display-4">Add New Poll Question</h1>
+                <p class="alert alert-primary">You have added {{total_question_added}} questions out of 5.</p>
+                <hr class="my-4">
+                <form action="{% url 'add_question' user_data.id %}" method="post" autocomplete="on">
+                    {% csrf_token %}
+                    {{form|crispy}}
+
+                    <div class="controls">
+                        <input type="submit" value="Add New" class="mt-3 btn btn-primary">
+                        <input type="reset" value="Rest" class="mt-3 mx-2 btn btn-secondary">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-5">
+            <div class="jumbotron" style="background-color: #E9ECEF; padding: 30px;">
+                <h1 class="display-4">Pollster</h1>
+                <p class="lead">All question list.</p>
+                <hr class="my-4">
+                <div class="row">
+                    {% for que in questions %}
+                    <div class="col-xl-12">
+                        <p>{{que.question_text}}</p>
+                        <form action="{% url 'add_vote' user_data.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-xl-12">
+                                <input type="radio" id="{{que.id}}{{que.option1}}" name="attribute_name"
+                                    value="option1_vote">
+                                <label for="{{que.id}}{{que.option1}}">{{que.option1}} - <span
+                                        class="badge  btn-success"> {{que.option1_vote}}</span></label>
+                            </div>
+                            <div class="col-xl-12">
+                                <input type="radio" id="{{que.id}}{{que.option2}}" name="attribute_name"
+                                    value="option2_vote">
+                                <label for="{{que.id}}{{que.option2}}">{{que.option2}} - <span
+                                        class="badge btn-success"> {{que.option2_vote}}</span></label>
+                            </div>
+                            <div class="col-xl-12">
+                                <input type="radio" id="{{que.id}}{{que.option3}}" name="attribute_name"
+                                    value="option3_vote">
+                                <label for="{{que.id}}{{que.option3}}">{{que.option3}} - <span
+                                        class="badge  btn-success"> {{que.option3_vote}}</span></label>
+                            </div>
+                            <div class="col-xl-12">
+                                <input type="radio" id="{{que.id}}{{que.option4}}" name="attribute_name"
+                                    value="option4_vote">
+                                <label for="{{que.id}}{{que.option4}}">{{que.option4}} - <span
+                                        class="badge  btn-success"> {{que.option4_vote}}</span></label>
+                            </div>
+                            <input type="hidden" value="{{que.id}}" name="question_id">
+                            <div class="col-xl-4">
+                                <input type="submit" value="Add Vote" class="btn btn-primary mt-3 ">
+                            </div>
+                        </form>
+                        <hr class="mt-4">
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    {% endblock content %}

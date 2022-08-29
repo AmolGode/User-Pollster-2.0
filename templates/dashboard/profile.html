@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xl-7 mt-1">
+            <div class="m-2">
+                <a href="{% url 'go_to_dashboard' user_data.id%}"> <i class="fa fa-arrow-left btn btn-primary"> Back
+                    </i>
+                </a>
+                <a href="{%url 'home_page' %}"> <i class="fa fa-sign-out btn btn-danger" aria-hidden="true"> Logout </i>
+                </a>
+            </div>
+            <div class="jumbotron" style="background-color: #E9ECEF; padding: 30px;">
+                <label class="lead">First Name : {{user_data.first_name}} {{user_data.first_name}}</label><br>
+                <label class="lead">Email Address : {{user_data.email}}</label><br>
+                <label class="lead">Phone Number : {{user_data.phone}}</label><br>
+            </div>
+        </div>
+
+        {% for que in questions %}
+        <div class="col-xl-7">
+            <div class="jumbotron">
+                <p>{{que.question_text}}</p>
+                
+                    <div class="col-xl-4">
+                        
+                        <label for="{{que.id}}{{que.option1}}">{{que.option1}} - <span class="badge  btn-success">
+                                {{que.option1_vote}}</span></label>
+                    </div>
+                    <div class="col-xl-4">
+                        
+                        <label for="{{que.id}}{{que.option2}}">{{que.option2}} - <span class="badge btn-success">
+                                {{que.option2_vote}}</span></label>
+                    </div>
+                    <div class="col-xl-4">
+                        
+                        <label for="{{que.id}}{{que.option3}}">{{que.option3}} - <span class="badge  btn-success">
+                                {{que.option3_vote}}</span></label>
+                    </div>
+                    <div class="col-xl-4">
+                        
+                        <label for="{{que.id}}{{que.option4}}">{{que.option4}} - <span class="badge  btn-success">
+                                {{que.option4_vote}}</span></label>
+                    </div>
+                   
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content%}

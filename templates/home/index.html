@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5 mt-5">
+            <div class="jumbotron" style="background-color: #E9ECEF; padding: 30px;">
+                <h1 class="display-4">Registration Page</h1>
+                <p class="lead">Pollster web app Registration page.</p>
+                {% if success_message %}
+                    <p class="alert alert-success">{{ success_message }}</p>
+
+                {% elif error_message  %}
+                    <p class="alert alert-danger">{{ error_message }}</p>
+                {% endif %}
+
+                <hr class="my-4">
+                <form action="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    {{form|crispy}}
+
+                    <div class="controls">
+                        <input type="submit" value="Register" class="mt-3 btn btn-primary">
+                        <input type="reset" value="Rest" class="mt-3 mx-2 btn btn-secondary">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-5 mt-5">
+            <div class="jumbotron" style="background-color: #E9ECEF; padding: 30px;">
+                <h1 class="display-4">Login Page</h1>
+                <p class="lead">Pollster web app Login page.</p>
+                <hr class="my-4">
+                <form action="{% url 'dashboard' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="control-group">
+                        <label class="control-label requiredField">
+                            Email Address <span class="asteriskField">*</span> 
+                        </label>
+                        <div class="controls">
+                            <input type="email" name="email" value="17amolgode@gmail.com" maxlength="40" class="textinput textInput" required="">
+                        </div>
+
+                        <label class="control-label requiredField">
+                            Password <span class="asteriskField">*</span> 
+                        </label>
+                        <div class="controls">
+                            <input type="password" name="password" value="Amol@123" maxlength="20" class="textinput textInput" required="">
+                        </div>
+                        <div class="controls">
+                            <input type="submit" value="Login" class="mt-3 btn btn-primary">
+                            <input type="reset" value="Rest" class="mt-3 mx-2 btn btn-secondary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
